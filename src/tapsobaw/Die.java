@@ -44,7 +44,7 @@ public class Die {
     /**
      * Method to get the current value and reset it
      * @ no parameter
-     * @ return current value
+     * @ return current value: an int
      * */
     public int getCurrentValue() {
         if(currentValue < 1 || currentValue > numSides){
@@ -55,16 +55,4 @@ public class Die {
         return value;
     }
 
-      /**try{
-         if(currentValue <= 1 || currentValue >= numSides){
-             return currentValue;
-         }
-      } catch(DieNotRolledException e){
-          System.out.println(e.getMessage());
-      }
-
-        int value = currentValue;
-        currentValue = 0; //Reset currentValue so it must be rolled again
-        return value;
-    } */
 }
