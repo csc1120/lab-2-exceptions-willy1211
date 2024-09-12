@@ -27,7 +27,9 @@ public class Driver {
         int[] rollResults = rollDice(dice, numRolls);
         int maxCount = findMax(rollResults);
 
-        System.out.println(maxCount); //test code
+        report(rollResults, maxCount);
+
+        //System.out.println(maxCount); //test code
 
     }
 
@@ -99,6 +101,25 @@ public class Driver {
             }
         }
         return max;
+    }
+
+    /**
+     * Public findMax() method: take an array containing rolling results
+     * find and return the largest count
+     * @ parameter: an array, rollResults
+     * @ return largest count: int
+     * */
+    static void report(int[] rollResults, int maxCount){
+        for(int i = 0; i< rollResults.length; i++){
+            if(rollResults[i] > 0){
+                System.out.print(i+ ": ");
+                for(int j = 0; j< rollResults[i]; j++){
+                    System.out.print("*");
+                }
+                System.out.println();
+            }
+        }
+        System.out.println("Most frequent count: " + maxCount);
     }
 
 }
