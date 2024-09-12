@@ -38,7 +38,7 @@ public class Die {
      * Method to roll the die and generate a new random value
      * */
     public void roll(){
-        this.currentValue = random.nextInt(numSides); // Random value 1-numSides
+        this.currentValue = random.nextInt(numSides)+1; // Random value 1-numSides
     }
 
     /**

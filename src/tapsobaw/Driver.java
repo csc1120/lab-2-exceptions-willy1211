@@ -9,6 +9,10 @@ package tapsobaw;
 
 import java.util.Scanner;
 
+/**
+ * public class driver
+ * contain a number of helper method and main
+ * */
 public class Driver {
 
     public static void main(String[] args) {
@@ -17,8 +21,13 @@ public class Driver {
         int numDice = input[0];
         int numSides = input[1];
         int numRolls = input[2];
-        System.out.println(numDice + " "+ numSides + " "+numRolls);
+        System.out.println(numDice + " "+ numSides + " "+numRolls); //test code
 
+        Die[] dice = createDice(numDice, numSides);
+        int[] rollResults = rollDice(dice, numRolls);
+        int maxCount = findMax(rollResults);
+
+        System.out.println(maxCount); //test code
 
     }
 
@@ -28,13 +37,15 @@ public class Driver {
      * @ return the 3 numbers in an array
      * */
     static int[] getInput(){
-        Scanner scanner = new Scanner (System.in);
-        System.out.println("Please enter the number of dice to roll, how many sides the dice have,\n" +
-                "and how many rolls to complete, separating the values by a space.\n" +
-                "Example: \"2 6 1000\"");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("""
+                Please enter the number of dice to roll, \
+                how many sides the dice have,
+                and how many rolls to complete, separating the values by a space.
+                Example: "2 6 1000\"""");
 
         String[] input = scanner.nextLine().split(" ");
-        int[] result = new int [3];
+        int[] result = new int[3];
         for(int i = 0; i<3; i++){
             result[i] = Integer.parseInt(input[i]);
         }
@@ -42,16 +53,52 @@ public class Driver {
     }
 
     /**
-     * Public createDice() class
+     * Public createDice() method
      * @ parameters : numDice and numSides
      * @ return an array of Die objects
      * */
     static Die[] createDice(int numDice, int numSides){
         Die[] dice = new Die[numDice];
         for(int i = 0; i < numDice; i++){
-            dice[i] = new Die (numSides);
+            dice[i] = new Die(numSides);
         }
         return dice;
+    }
+
+    /**
+     * Public rollDice() method: roll all dice
+     * total up the values and add to that value's total
+     * @ parameter numRolls and an array of Die objects
+     * @ return rollResults: an int array
+     * */
+    static int[] rollDice(Die[] dice, int numRolls){
+        int[] rollResults = new int[dice.length*dice[0].numSides+1];
+
+        for(int t = 0; t< numRolls; t++){
+            int sum = 0;
+            for(Die die: dice){
+                die.roll();
+                sum += die.getCurrentValue();
+            }
+            rollResults[sum]++;
+        }
+        return rollResults;
+    }
+
+    /**
+     * Public findMax() method: take an array containing rolling results
+     * find and return the largest count
+     * @ parameter: an array, rollResults
+     * @ return largest count: int
+     * */
+    static int findMax(int[] rollResults){
+        int max = 0;
+        for(int count: rollResults){
+            if(count > max){
+                max = count;
+            }
+        }
+        return max;
     }
 
 }
