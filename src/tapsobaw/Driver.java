@@ -16,20 +16,30 @@ import java.util.Scanner;
 public class Driver {
 
     public static void main(String[] args) {
+        boolean tryAgain = false;
+        while(!tryAgain){
+            try{
+                int[] input = getInput();
+                int numDice = input[0];
+                int numSides = input[1];
+                int numRolls = input[2];
 
-        int[] input = getInput();
-        int numDice = input[0];
-        int numSides = input[1];
-        int numRolls = input[2];
-        System.out.println(numDice + " "+ numSides + " "+numRolls); //test code
+                Die[] dice = createDice(numDice, numSides);
+                int[] rollResults = rollDice(dice, numRolls);
+                int maxCount = findMax(rollResults);
 
-        Die[] dice = createDice(numDice, numSides);
-        int[] rollResults = rollDice(dice, numRolls);
-        int maxCount = findMax(rollResults);
+                report(rollResults, maxCount);
+                tryAgain = true;
 
-        report(rollResults, maxCount);
-
-        //System.out.println(maxCount); //test code
+            } catch (NumberFormatException e){
+                System.err.println("Invalid input: Make sure your input are all whole numbers.");
+            } catch (ArrayIndexOutOfBoundsException e){
+                System.err.println("Invalid input: Expected 3 values but only received 2. " +
+                        "Separate values by a space.");
+            } catch (IllegalArgumentException e){
+                System.err.println("Bad die creation: Illegal numbers of sides: ");
+            }
+        }
 
     }
 

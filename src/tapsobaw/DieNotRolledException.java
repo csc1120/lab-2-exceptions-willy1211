@@ -16,8 +16,13 @@ public class DieNotRolledException extends RuntimeException {
      * custom exception to be thrown when the die is not rolled yet
      * @ parameter string message
      * */
-    public DieNotRolledException(String message){
-        super(message);
+   // public DieNotRolledException(String message){
+     //   super(message);
+   // }
+
+    private final String message = "Die has not been rolled or invalid value.";
+    public String getMessage(){
+        return message;
     }
 
 }
