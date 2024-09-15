@@ -14,15 +14,10 @@ package tapsobaw;
 public class DieNotRolledException extends RuntimeException {
     /**
      * custom exception to be thrown when the die is not rolled yet
-     * @ parameter string message
+     * @return string
      * */
-   // public DieNotRolledException(String message){
-     //   super(message);
-   // }
-
-    private final String message = "Die has not been rolled or invalid value.";
-    public String getMessage(){
-        return message;
+    public String getMessage() {
+        return "Die has not been rolled or invalid value.";
     }
 
 }

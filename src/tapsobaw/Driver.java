@@ -15,30 +15,36 @@ import java.util.Scanner;
  * */
 public class Driver {
 
+    private static int numSides;
+    private static final int TEN = 10;
+
+
     public static void main(String[] args) {
         boolean tryAgain = false;
         while(!tryAgain){
             try{
                 int[] input = getInput();
                 int numDice = input[0];
-                int numSides = input[1];
+                numSides = input[1];
                 int numRolls = input[2];
 
                 Die[] dice = createDice(numDice, numSides);
                 int[] rollResults = rollDice(dice, numRolls);
                 int maxCount = findMax(rollResults);
 
-                report(rollResults, maxCount);
+                report(numDice, rollResults, maxCount);
                 tryAgain = true;
 
             } catch (NumberFormatException e){
                 System.err.println("Invalid input: Make sure your input are all whole numbers.");
             } catch (ArrayIndexOutOfBoundsException e){
-                System.err.println("Invalid input: Expected 3 values but only received 2. " +
-                        "Separate values by a space.");
+                System.err.println("Invalid input: Expected 3 values but only received 2. ");
             } catch (IllegalArgumentException e){
-                System.err.println("Bad die creation: Illegal numbers of sides: ");
+                System.err.println("Bad die creation: Illegal numbers of sides: "+ numSides);
+            } catch (ArithmeticException e){
+                System.err.println("An Arithmetic operation cannot be performed.");
             }
+
         }
 
     }
@@ -51,11 +57,11 @@ public class Driver {
     static int[] getInput(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
-                Please enter the number of dice to roll, \
-                how many sides the dice have,
-                and how many rolls to complete, separating the values by a space.
-                Example: "2 6 1000\"""");
-
+                Please enter the number of dice to roll, how many sides the dice have,
+                and how many rolls to complete, separating the values by a space.\s
+                Example:"2 6 1000\"""");
+        System.out.println();
+        //System.out.print("\nEnter configuration:");
         String[] input = scanner.nextLine().split(" ");
         int[] result = new int[3];
         for(int i = 0; i<3; i++){
@@ -114,22 +120,18 @@ public class Driver {
     }
 
     /**
-     * Public findMax() method: take an array containing rolling results
-     * find and return the largest count
+     * Public report() method: take an array containing rolling results and the maxCount
+     * print the results
      * @ parameter: an array, rollResults
-     * @ return largest count: int
      * */
-    static void report(int[] rollResults, int maxCount){
-        for(int i = 0; i< rollResults.length; i++){
+    static void report(int numDice, int[] rollResults, int maxCount){
+        int scale = maxCount / TEN;
+        for(int i = numDice; i< rollResults.length; i++){
             if(rollResults[i] > 0){
-                System.out.print(i+ ": ");
-                for(int j = 0; j< rollResults[i]; j++){
-                    System.out.print("*");
-                }
-                System.out.println();
+                int numStars = rollResults[i] / scale;
+                System.out.printf("%2d: %-10d %s%n", i, rollResults[i], "*".repeat(numStars));
             }
         }
-        System.out.println("Most frequent count: " + maxCount);
     }
 
 }
