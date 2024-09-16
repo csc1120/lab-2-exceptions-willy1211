@@ -61,7 +61,8 @@ public class Driver {
                 and how many rolls to complete, separating the values by a space.\s
                 Example:"2 6 1000\"""");
         System.out.println();
-        //System.out.print("\nEnter configuration:");
+        System.out.print("\nEnter configuration:");
+
         String[] input = scanner.nextLine().split(" ");
         int[] result = new int[3];
         for(int i = 0; i<3; i++){
